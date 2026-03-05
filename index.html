@@ -129,7 +129,7 @@
   <div class="container">
     <div>
       <h1>Open-Source AI Model Benchmark</h1>
-      <p>AIモデル総合性能比較 — 13ジャンル・290モデル — 2026年3月5日更新</p>
+      <p>AIモデル総合性能比較 — 13ジャンル・295モデル — 2026年3月5日更新</p>
     </div>
   </div>
 </header>
@@ -172,70 +172,76 @@ const categories = {
       { key: "swe", label: "SWE-bench", max: 100, unit: "%" }
     ],
     models: [
-      // === 2026 Frontier ===
+      // === 2026 Frontier (Feb-Mar 2026) ===
+      { name: "Gemini 3.1 Pro", org: "Google DeepMind", year: 2026, params: "N/A", arch: "MoE+Deep Think", license: "Proprietary", arena: 1480, aime: 95.0, gpqa: 94.3, swe: 70.0 },
+      { name: "Claude Opus 4.6", org: "Anthropic", year: 2026, params: "N/A", arch: "Hybrid Reasoning", license: "Proprietary", arena: 1470, aime: 90.0, gpqa: 85.0, swe: 75.0 },
+      { name: "Claude Sonnet 4.6", org: "Anthropic", year: 2026, params: "N/A", arch: "Hybrid Reasoning", license: "Proprietary", arena: 1445, aime: 85.0, gpqa: 80.0, swe: 68.0 },
+      { name: "Qwen 3.5", org: "Alibaba", year: 2026, params: "397B (17B act)", arch: "GDN+MoE Hybrid", license: "Apache 2.0", arena: 1448, aime: 91.3, gpqa: 88.4, swe: 76.4 },
+      { name: "Grok 4.20 Beta", org: "xAI", year: 2026, params: "~1.7T", arch: "Multi-Agent", license: "Proprietary", arena: 1475, aime: 98.0, gpqa: 90.0, swe: 76.0 },
       { name: "GLM-5", org: "Zhipu AI", year: 2026, params: "744B", arch: "MoE", license: "MIT", arena: 1451, aime: 92.7, gpqa: 86.0, swe: 77.8 },
       { name: "Kimi K2.5", org: "Moonshot AI", year: 2026, params: "1T", arch: "MoE", license: "MIT", arena: 1447, aime: 96.1, gpqa: 87.6, swe: 76.8 },
-      { name: "Qwen 3.5", org: "Alibaba", year: 2025, params: "397B", arch: "MoE", license: "Apache 2.0", arena: 1448, aime: 94.1, gpqa: 88.4, swe: 76.4 },
       { name: "MiniMax M2.5", org: "MiniMax", year: 2026, params: "456B", arch: "MoE", license: "Apache 2.0", arena: 1420, aime: 86.3, gpqa: 85.2, swe: 80.2 },
-      { name: "GLM-4.7", org: "Zhipu AI", year: 2025, params: "355B", arch: "MoE", license: "Apache 2.0", arena: 1445, aime: 95.7, gpqa: 85.7, swe: 73.8 },
-      // === 2025 Proprietary Frontier ===
-      { name: "GPT-5", org: "OpenAI", year: 2025, params: "N/A", arch: "Omni Reasoning", license: "Proprietary", arena: 1460, aime: 96.0, gpqa: 88.0, swe: 72.0 },
-      { name: "GPT-4.1", org: "OpenAI", year: 2025, params: "N/A", arch: "Dense (1M ctx)", license: "Proprietary", arena: 1400, aime: 68.0, gpqa: 66.0, swe: 55.0 },
-      { name: "GPT-4.1 mini", org: "OpenAI", year: 2025, params: "N/A", arch: "Dense", license: "Proprietary", arena: 1350, aime: 52.0, gpqa: 55.0, swe: 42.0 },
-      { name: "GPT-4.1 nano", org: "OpenAI", year: 2025, params: "N/A", arch: "Dense (Lightweight)", license: "Proprietary", arena: 1250, aime: 32.0, gpqa: 40.0, swe: 28.0 },
-      { name: "OpenAI o3", org: "OpenAI", year: 2025, params: "N/A", arch: "CoT Reasoning", license: "Proprietary", arena: 1440, aime: 96.7, gpqa: 87.7, swe: 69.1 },
-      { name: "OpenAI o4-mini", org: "OpenAI", year: 2025, params: "N/A", arch: "CoT Reasoning", license: "Proprietary", arena: 1430, aime: 95.2, gpqa: 82.0, swe: 68.0 },
-      { name: "Claude Opus 4", org: "Anthropic", year: 2025, params: "N/A", arch: "Hybrid Reasoning", license: "Proprietary", arena: 1440, aime: 85.0, gpqa: 80.0, swe: 72.5 },
+      // === 2025 H2 Proprietary ===
+      { name: "GPT-5.2", org: "OpenAI", year: 2025, params: "N/A", arch: "Omni Reasoning v3", license: "Proprietary", arena: 1470, aime: 96.0, gpqa: 90.0, swe: 76.0 },
+      { name: "GPT-5", org: "OpenAI", year: 2025, params: "N/A", arch: "Omni+Router (272K ctx)", license: "Proprietary", arena: 1460, aime: 94.6, gpqa: 84.2, swe: 74.9 },
+      { name: "Gemini 3 Pro", org: "Google DeepMind", year: 2025, params: "N/A", arch: "MoE+Deep Think", license: "Proprietary", arena: 1460, aime: 92.0, gpqa: 90.0, swe: 65.0 },
+      { name: "Grok 4", org: "xAI", year: 2025, params: "~1.7T", arch: "200K GPU Reasoning", license: "Proprietary", arena: 1465, aime: 97.3, gpqa: 89.2, swe: 73.0 },
+      { name: "Grok 4 Fast", org: "xAI", year: 2025, params: "N/A", arch: "Fast (2M ctx)", license: "Proprietary", arena: 1430, aime: 90.0, gpqa: 82.0, swe: 60.0 },
+      { name: "Claude Opus 4.5", org: "Anthropic", year: 2025, params: "N/A", arch: "Hybrid Reasoning", license: "Proprietary", arena: 1455, aime: 88.0, gpqa: 83.0, swe: 73.0 },
+      { name: "Claude Sonnet 4.5", org: "Anthropic", year: 2025, params: "N/A", arch: "Hybrid Reasoning", license: "Proprietary", arena: 1440, aime: 82.0, gpqa: 78.0, swe: 70.0 },
+      { name: "Claude Haiku 4.5", org: "Anthropic", year: 2025, params: "N/A", arch: "Fast+Thinking", license: "Proprietary", arena: 1380, aime: 65.0, gpqa: 68.0, swe: 55.0 },
+      { name: "Qwen3-Max", org: "Alibaba", year: 2025, params: "1T+", arch: "Proprietary MoE", license: "Proprietary", arena: 1430, aime: 100.0, gpqa: 85.4, swe: 60.0 },
+      // === 2025 H1 Proprietary ===
+      { name: "Claude Opus 4", org: "Anthropic", year: 2025, params: "N/A", arch: "Hybrid+ASL-3", license: "Proprietary", arena: 1440, aime: 85.0, gpqa: 80.0, swe: 72.5 },
       { name: "Claude Sonnet 4", org: "Anthropic", year: 2025, params: "N/A", arch: "Hybrid Reasoning", license: "Proprietary", arena: 1420, aime: 78.0, gpqa: 76.0, swe: 65.0 },
-      { name: "Claude Haiku 3.5", org: "Anthropic", year: 2025, params: "N/A", arch: "Dense (Fast)", license: "Proprietary", arena: 1310, aime: 45.0, gpqa: 52.0, swe: 40.0 },
-      { name: "Gemini 2.5 Pro", org: "Google DeepMind", year: 2025, params: "N/A", arch: "MoE+Thinking", license: "Proprietary", arena: 1450, aime: 92.0, gpqa: 84.0, swe: 63.8 },
-      { name: "Gemini 2.5 Flash", org: "Google DeepMind", year: 2025, params: "N/A", arch: "MoE+Thinking", license: "Proprietary", arena: 1410, aime: 82.0, gpqa: 72.0, swe: 52.0 },
-      { name: "Grok 4", org: "xAI", year: 2025, params: "N/A", arch: "Dense Reasoning", license: "Proprietary", arena: 1465, aime: 97.3, gpqa: 89.2, swe: 75.0 },
-      { name: "Grok-3", org: "xAI", year: 2025, params: "N/A (200K GPU)", arch: "Dense", license: "Proprietary", arena: 1402, aime: 93.3, gpqa: 84.6, swe: 49.0 },
+      { name: "Gemini 2.5 Pro", org: "Google DeepMind", year: 2025, params: "N/A", arch: "MoE+Thinking 1M", license: "Proprietary", arena: 1450, aime: 92.0, gpqa: 84.0, swe: 63.8 },
+      { name: "Gemini 2.5 Flash", org: "Google DeepMind", year: 2025, params: "N/A", arch: "MoE+Thinking 1M", license: "Proprietary", arena: 1410, aime: 82.0, gpqa: 72.0, swe: 52.0 },
+      { name: "GPT-4.1", org: "OpenAI", year: 2025, params: "N/A", arch: "Dense (1M ctx)", license: "Proprietary", arena: 1400, aime: 68.0, gpqa: 66.0, swe: 54.6 },
+      { name: "GPT-4.1 mini", org: "OpenAI", year: 2025, params: "N/A", arch: "Dense", license: "Proprietary", arena: 1350, aime: 52.0, gpqa: 55.0, swe: 42.0 },
+      { name: "OpenAI o3", org: "OpenAI", year: 2025, params: "N/A", arch: "CoT+Tool Use", license: "Proprietary", arena: 1440, aime: 88.9, gpqa: 83.3, swe: 69.1 },
+      { name: "OpenAI o4-mini", org: "OpenAI", year: 2025, params: "N/A", arch: "CoT Reasoning", license: "Proprietary", arena: 1430, aime: 92.7, gpqa: 81.4, swe: 68.1 },
+      { name: "Grok-3", org: "xAI", year: 2025, params: "N/A (200K GPU)", arch: "Dense (1M ctx)", license: "Proprietary", arena: 1402, aime: 93.3, gpqa: 84.6, swe: 49.0 },
       { name: "Grok-3 Mini", org: "xAI", year: 2025, params: "N/A", arch: "CoT Reasoning", license: "Proprietary", arena: 1370, aime: 95.8, gpqa: 80.4, swe: 42.0 },
-      // === 2025 Open-Source Frontier ===
-      { name: "DeepSeek V3.2", org: "DeepSeek", year: 2025, params: "685B", arch: "MoE", license: "MIT", arena: 1421, aime: 89.3, gpqa: 79.9, swe: 77.8 },
-      { name: "DeepSeek R1", org: "DeepSeek", year: 2025, params: "671B", arch: "MoE CoT", license: "MIT", arena: 1430, aime: 87.5, gpqa: 71.5, swe: 49.2 },
-      { name: "DeepSeek R2", org: "DeepSeek", year: 2025, params: "671B", arch: "MoE CoT", license: "MIT", arena: 1445, aime: 93.0, gpqa: 83.0, swe: 60.0 },
+      { name: "GPT-4.5 (Orion)", org: "OpenAI", year: 2025, params: "~4T (est)", arch: "Dense", license: "Proprietary", arena: 1380, aime: 55.0, gpqa: 65.0, swe: 45.0 },
+      { name: "OpenAI o3-mini", org: "OpenAI", year: 2025, params: "N/A", arch: "CoT Reasoning", license: "Proprietary", arena: 1410, aime: 95.8, gpqa: 79.0, swe: 50.0 },
+      { name: "Claude 3.7 Sonnet", org: "Anthropic", year: 2025, params: "N/A", arch: "Hybrid Reasoning", license: "Proprietary", arena: 1390, aime: 64.6, gpqa: 74.0, swe: 62.3 },
+      { name: "Gemini 2.0 Flash", org: "Google DeepMind", year: 2025, params: "N/A", arch: "Dense (Fast)", license: "Proprietary", arena: 1330, aime: 50.0, gpqa: 58.0, swe: 38.0 },
+      // === 2025 Open-Source ===
+      { name: "DeepSeek V3.2", org: "DeepSeek", year: 2025, params: "671B (37B act)", arch: "MoE", license: "MIT", arena: 1421, aime: 89.3, gpqa: 79.9, swe: 77.8 },
+      { name: "DeepSeek V3.1", org: "DeepSeek", year: 2025, params: "671B (37B act)", arch: "MoE Hybrid Think", license: "MIT", arena: 1415, aime: 85.0, gpqa: 72.0, swe: 55.0 },
+      { name: "DeepSeek R1", org: "DeepSeek", year: 2025, params: "671B (37B act)", arch: "MoE CoT", license: "MIT", arena: 1430, aime: 79.8, gpqa: 71.5, swe: 49.2 },
       { name: "Mistral Large 3", org: "Mistral AI", year: 2025, params: "675B (41B act)", arch: "MoE", license: "Apache 2.0", arena: 1410, aime: 82.7, gpqa: 74.8, swe: 58.3 },
-      { name: "Mistral Medium 3", org: "Mistral AI", year: 2025, params: "N/A", arch: "Dense", license: "Proprietary", arena: 1380, aime: 70.0, gpqa: 65.0, swe: 48.0 },
-      { name: "Llama 4 Maverick", org: "Meta", year: 2025, params: "402B (17B act)", arch: "MoE", license: "Llama 4", arena: 1400, aime: 78.6, gpqa: 72.1, swe: 55.0 },
+      { name: "Mistral Medium 3", org: "Mistral AI", year: 2025, params: "33B", arch: "MoE", license: "Apache 2.0", arena: 1380, aime: 70.0, gpqa: 65.0, swe: 48.0 },
+      { name: "Llama 4 Maverick", org: "Meta", year: 2025, params: "400B (17B act)", arch: "MoE 128 experts", license: "Llama 4", arena: 1400, aime: 78.6, gpqa: 72.1, swe: 55.0 },
       { name: "Llama 4 Scout", org: "Meta", year: 2025, params: "109B (17B act)", arch: "MoE 10M ctx", license: "Llama 4", arena: 1350, aime: 55.0, gpqa: 60.0, swe: 35.0 },
-      { name: "Qwen 3 235B", org: "Alibaba", year: 2025, params: "235B", arch: "Dense", license: "Apache 2.0", arena: 1422, aime: 92.3, gpqa: 82.6, swe: 55.7 },
-      { name: "Qwen 3 32B", org: "Alibaba", year: 2025, params: "32B", arch: "Dense", license: "Apache 2.0", arena: 1380, aime: 81.5, gpqa: 68.4, swe: 40.0 },
+      { name: "Qwen 3 235B", org: "Alibaba", year: 2025, params: "235B (22B act)", arch: "MoE Hybrid Think", license: "Apache 2.0", arena: 1422, aime: 81.5, gpqa: 82.6, swe: 55.7 },
+      { name: "Qwen 3 32B", org: "Alibaba", year: 2025, params: "32B", arch: "Dense Hybrid Think", license: "Apache 2.0", arena: 1380, aime: 81.5, gpqa: 68.4, swe: 40.0 },
+      { name: "Command A", org: "Cohere", year: 2025, params: "111B", arch: "Dense RAG+Agent", license: "Proprietary", arena: 1360, aime: 55.0, gpqa: 60.0, swe: 42.0 },
+      { name: "GLM-4.7", org: "Zhipu AI", year: 2025, params: "355B", arch: "MoE", license: "Apache 2.0", arena: 1445, aime: 95.7, gpqa: 85.7, swe: 73.8 },
       { name: "Step-3.5-Flash", org: "StepFun", year: 2025, params: "196B", arch: "MoE", license: "Apache 2.0", arena: 1385, aime: 97.3, gpqa: 73.0, swe: 50.1 },
       { name: "Nemotron Ultra", org: "NVIDIA", year: 2025, params: "253B", arch: "Dense", license: "Apache 2.0", arena: 1390, aime: 80.2, gpqa: 70.5, swe: 52.8 },
       { name: "Hunyuan 2.0", org: "Tencent", year: 2025, params: "406B", arch: "MoE", license: "Apache 2.0", arena: 1395, aime: 80.0, gpqa: 71.8, swe: 53.5 },
-      { name: "Command A", org: "Cohere", year: 2025, params: "111B", arch: "MoE", license: "CC-BY-NC-4.0", arena: 1360, aime: 55.0, gpqa: 60.0, swe: 42.0 },
       { name: "Phi-4-Reasoning+", org: "Microsoft", year: 2025, params: "14B", arch: "Dense CoT", license: "MIT", arena: 1285, aime: 82.5, gpqa: 65.8, swe: 28.0 },
       { name: "MiMo 7B", org: "Xiaomi", year: 2025, params: "7B", arch: "Dense", license: "Apache 2.0", arena: 1195, aime: 70.2, gpqa: 60.6, swe: 15.8 },
       { name: "Gemma 3 27B", org: "Google", year: 2025, params: "27B", arch: "Dense", license: "Gemma", arena: 1295, aime: 40.2, gpqa: 48.7, swe: 28.3 },
-      // === 2024 Models ===
-      { name: "GPT-4.5 (Orion)", org: "OpenAI", year: 2025, params: "~4T (est)", arch: "Dense", license: "Proprietary", arena: 1380, aime: 55.0, gpqa: 65.0, swe: 45.0 },
-      { name: "OpenAI o3-mini", org: "OpenAI", year: 2025, params: "N/A", arch: "CoT Reasoning", license: "Proprietary", arena: 1410, aime: 95.8, gpqa: 79.0, swe: 50.0 },
+      // === 2024 ===
+      { name: "DeepSeek V3", org: "DeepSeek", year: 2024, params: "671B (37B act)", arch: "MoE ($5.6M train)", license: "MIT", arena: 1400, aime: 79.8, gpqa: 59.1, swe: 42.0 },
       { name: "OpenAI o1", org: "OpenAI", year: 2024, params: "N/A", arch: "CoT Reasoning", license: "Proprietary", arena: 1380, aime: 83.0, gpqa: 78.0, swe: 48.0 },
       { name: "OpenAI o1-mini", org: "OpenAI", year: 2024, params: "N/A", arch: "CoT Reasoning", license: "Proprietary", arena: 1350, aime: 70.0, gpqa: 68.0, swe: 40.0 },
-      { name: "Claude 3.7 Sonnet", org: "Anthropic", year: 2025, params: "N/A", arch: "Hybrid Reasoning", license: "Proprietary", arena: 1390, aime: 64.6, gpqa: 74.0, swe: 62.3 },
-      { name: "Gemini 2.0 Pro", org: "Google DeepMind", year: 2025, params: "N/A", arch: "Dense", license: "Proprietary", arena: 1375, aime: 60.0, gpqa: 70.0, swe: 45.0 },
-      { name: "Gemini 2.0 Flash", org: "Google DeepMind", year: 2025, params: "N/A", arch: "Dense (Fast)", license: "Proprietary", arena: 1330, aime: 50.0, gpqa: 58.0, swe: 38.0 },
       { name: "Llama 3.3 70B", org: "Meta", year: 2024, params: "70B", arch: "Dense", license: "Llama 3", arena: 1320, aime: 52.4, gpqa: 54.3, swe: 35.8 },
       { name: "Llama 3.1 405B", org: "Meta", year: 2024, params: "405B", arch: "Dense", license: "Llama 3.1", arena: 1360, aime: 60.0, gpqa: 60.0, swe: 40.0 },
       { name: "Phi-4 14B", org: "Microsoft", year: 2024, params: "14B", arch: "Dense", license: "MIT", arena: 1260, aime: 65.0, gpqa: 56.0, swe: 22.0 },
-      { name: "Phi-4-mini 3.8B", org: "Microsoft", year: 2025, params: "3.8B", arch: "Dense", license: "MIT", arena: 1150, aime: 40.0, gpqa: 38.0, swe: 12.0 },
       { name: "Gemma 2 27B", org: "Google", year: 2024, params: "27B", arch: "Dense", license: "Apache 2.0", arena: 1250, aime: 30.0, gpqa: 42.0, swe: 18.0 },
       { name: "Mistral Large 2", org: "Mistral AI", year: 2024, params: "123B", arch: "Dense", license: "Mistral Research", arena: 1330, aime: 45.0, gpqa: 58.0, swe: 35.0 },
-      // === Classic / Historical ===
+      // === Classic ===
       { name: "Llama 2 70B", org: "Meta", year: 2023, params: "70B", arch: "Dense", license: "Llama 2", arena: 1200, aime: 15.0, gpqa: 35.0, swe: 8.0 },
       { name: "Mixtral 8x7B", org: "Mistral AI", year: 2023, params: "47B (13B act)", arch: "MoE", license: "Apache 2.0", arena: 1180, aime: 12.0, gpqa: 33.0, swe: 10.0 },
       { name: "Mistral 7B", org: "Mistral AI", year: 2023, params: "7B", arch: "Dense", license: "Apache 2.0", arena: 1120, aime: 8.0, gpqa: 28.0, swe: 5.0 },
       { name: "Falcon-180B", org: "TII", year: 2023, params: "180B", arch: "Dense", license: "Falcon", arena: 1100, aime: 10.0, gpqa: 25.0, swe: 5.0 },
-      { name: "LLaMA 65B", org: "Meta", year: 2023, params: "65B", arch: "Dense", license: "Non-Commercial", arena: 1050, aime: 5.0, gpqa: 20.0, swe: 2.0 },
       { name: "Phi-2", org: "Microsoft", year: 2023, params: "2.7B", arch: "Dense", license: "MIT", arena: 1050, aime: 5.0, gpqa: 22.0, swe: 3.0 },
       { name: "BLOOM-176B", org: "BigScience", year: 2022, params: "176B", arch: "Dense", license: "RAIL", arena: 0, aime: 0, gpqa: 0, swe: 0 },
       { name: "GPT-NeoX-20B", org: "EleutherAI", year: 2022, params: "20B", arch: "Dense", license: "Apache 2.0", arena: 0, aime: 0, gpqa: 0, swe: 0 },
-      { name: "OPT-175B", org: "Meta", year: 2022, params: "175B", arch: "Dense", license: "Non-Commercial", arena: 0, aime: 0, gpqa: 0, swe: 0 },
       { name: "GPT-J-6B", org: "EleutherAI", year: 2021, params: "6B", arch: "Dense", license: "Apache 2.0", arena: 0, aime: 0, gpqa: 0, swe: 0 },
-      { name: "GPT-Neo 2.7B", org: "EleutherAI", year: 2021, params: "2.7B", arch: "Dense", license: "MIT", arena: 0, aime: 0, gpqa: 0, swe: 0 },
       { name: "T5-11B", org: "Google", year: 2019, params: "11B", arch: "Enc-Dec", license: "Apache 2.0", arena: 0, aime: 0, gpqa: 0, swe: 0 },
       { name: "GPT-2", org: "OpenAI", year: 2019, params: "1.5B", arch: "Transformer Dec", license: "MIT", arena: 0, aime: 0, gpqa: 0, swe: 0 },
       { name: "BERT", org: "Google", year: 2018, params: "340M", arch: "Transformer Enc", license: "Apache 2.0", arena: 0, aime: 0, gpqa: 0, swe: 0 }

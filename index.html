@@ -247,7 +247,9 @@ const categories = {
       { name: "SegFormer-B5", org: "NVIDIA", year: 2021, params: "84.6M", arch: "MiT+MLP Dec", license: "Apache 2.0", miou: 51.0, params_m: 84.6, note: "ADE20K" },
       { name: "HRNet-W48", org: "Microsoft", year: 2020, params: "65.8M", arch: "High-Res Net", license: "MIT", miou: 48.2, params_m: 65.8, note: "ADE20K" },
       { name: "PSPNet", org: "SenseTime/CUHK", year: 2017, params: "65.7M", arch: "ResNet101+PPM", license: "MIT", miou: 85.4, params_m: 65.7, note: "Cityscapes" },
-      { name: "BEiT-3 Seg", org: "Microsoft", year: 2023, params: "675M", arch: "ViT+Multimodal", license: "MIT", miou: 62.8, params_m: 675, note: "ADE20K" }
+      { name: "BEiT-3 Seg", org: "Microsoft", year: 2023, params: "675M", arch: "ViT+Multimodal", license: "MIT", miou: 62.8, params_m: 675, note: "ADE20K" },
+      { name: "MaskFormer", org: "Meta", year: 2021, params: "42M-212M", arch: "Swin+MaskClass", license: "CC-BY-NC-4.0", miou: 55.6, params_m: 212, note: "ADE20K Unified" },
+      { name: "YOLOv8-Seg X", org: "Ultralytics", year: 2023, params: "71.8M", arch: "CSPDarknet+Seg", license: "AGPL-3.0", miou: 43.4, params_m: 71.8, note: "COCO Instance mAP" }
     ]
   },
 
@@ -273,7 +275,9 @@ const categories = {
       { name: "DeepSpeech 0.9", org: "Mozilla", year: 2020, params: "47M", arch: "RNN+CTC", license: "MPL 2.0", wer: 6.5, params_m: 47, langs: 1 },
       { name: "OWSM v3.1", org: "CMU/ESPnet", year: 2024, params: "1B", arch: "E-Branchformer", license: "Apache 2.0", wer: 3.4, params_m: 1000, langs: 151 },
       { name: "Moonshine Base", org: "Useful Sensors", year: 2024, params: "61M", arch: "Enc-Dec Trans", license: "MIT", wer: 6.8, params_m: 61, langs: 1 },
-      { name: "Kaldi (TDNN)", org: "JHU", year: 2016, params: "~20M", arch: "TDNN+HMM", license: "Apache 2.0", wer: 5.0, params_m: 20, langs: 1 }
+      { name: "Kaldi (TDNN)", org: "JHU", year: 2016, params: "~20M", arch: "TDNN+HMM", license: "Apache 2.0", wer: 5.0, params_m: 20, langs: 1 },
+      { name: "Parakeet-RNNT-1.1B", org: "NVIDIA", year: 2024, params: "1.1B", arch: "FastConf+RNNT", license: "CC-BY-4.0", wer: 1.5, params_m: 1100, langs: 1 },
+      { name: "DeepSpeech (Baidu)", org: "Baidu", year: 2014, params: "38M", arch: "RNN+CTC", license: "Apache 2.0", wer: 16.0, params_m: 38, langs: 1 }
     ]
   },
 
@@ -282,7 +286,7 @@ const categories = {
     metrics: [
       { key: "fid", label: "FID (低い方が良い)", max: 30, unit: "", lowerBetter: true },
       { key: "humanpref", label: "人間嗜好率", max: 100, unit: "%" },
-      { key: "params_m", label: "パラメータ数", max: 12500, unit: "M" }
+      { key: "params_m", label: "パラメータ数", max: 35000, unit: "M" }
     ],
     models: [
       { name: "FLUX.1 [dev]", org: "Black Forest Labs", year: 2024, params: "12B", arch: "Rectified Flow Trans", license: "FLUX-dev", fid: 4.5, humanpref: 88, params_m: 12000 },
@@ -298,7 +302,9 @@ const categories = {
       { name: "DeepFloyd IF", org: "Stability AI", year: 2023, params: "4.3B", arch: "Pixel Diffusion", license: "DeepFloyd IF", fid: 6.7, humanpref: 68, params_m: 4300 },
       { name: "StyleGAN3", org: "NVIDIA", year: 2021, params: "30M", arch: "GAN", license: "Nvidia Source", fid: 2.8, humanpref: 60, params_m: 30 },
       { name: "StyleGAN2", org: "NVIDIA", year: 2020, params: "30M", arch: "GAN", license: "Nvidia Source", fid: 2.8, humanpref: 55, params_m: 30 },
-      { name: "DALL-E Mini / Craiyon", org: "Community", year: 2021, params: "400M", arch: "VQVAE+Autoregressive", license: "Apache 2.0", fid: 18.0, humanpref: 30, params_m: 400 }
+      { name: "DALL-E Mini / Craiyon", org: "Community", year: 2021, params: "400M", arch: "VQVAE+Autoregressive", license: "Apache 2.0", fid: 18.0, humanpref: 30, params_m: 400 },
+      { name: "FLUX.2 [dev]", org: "Black Forest Labs", year: 2025, params: "32B", arch: "Flow Trans+VLM", license: "FLUX-dev", fid: 3.8, humanpref: 92, params_m: 32000 },
+      { name: "Kandinsky 2.1", org: "Sber AI", year: 2023, params: "3.3B", arch: "CLIP Prior+Diffusion", license: "Apache 2.0", fid: 8.0, humanpref: 62, params_m: 3300 }
     ]
   },
 
@@ -322,7 +328,11 @@ const categories = {
       { name: "FastSpeech 2", org: "Microsoft", year: 2020, params: "27M", arch: "Non-AR Trans", license: "MIT", mos: 3.8, rtf: 0.01, params_m: 27 },
       { name: "Tortoise TTS", org: "James Betker", year: 2022, params: "500M", arch: "CLVP+Diffusion", license: "Apache 2.0", mos: 4.2, rtf: 0.80, params_m: 500 },
       { name: "Piper", org: "Rhasspy", year: 2023, params: "20M", arch: "VITS (Optimized)", license: "MIT", mos: 3.6, rtf: 0.005, params_m: 20 },
-      { name: "OpenVoice V2", org: "MyShell", year: 2024, params: "50M", arch: "Base+Tone Clone", license: "MIT", mos: 3.9, rtf: 0.10, params_m: 50 }
+      { name: "OpenVoice V2", org: "MyShell", year: 2024, params: "50M", arch: "Base+Tone Clone", license: "MIT", mos: 3.9, rtf: 0.10, params_m: 50 },
+      { name: "Kokoro", org: "Kokoro Project", year: 2024, params: "82M", arch: "StyleTTS-based", license: "Apache 2.0", mos: 4.1, rtf: 0.05, params_m: 82 },
+      { name: "Orpheus TTS 3B", org: "Canopy Labs", year: 2025, params: "3B", arch: "LLM-based TTS", license: "Apache 2.0", mos: 4.4, rtf: 0.18, params_m: 3000 },
+      { name: "Chatterbox", org: "Resemble AI", year: 2025, params: "N/A", arch: "LLM+Diffusion", license: "MIT", mos: 4.3, rtf: 0.15, params_m: 500 },
+      { name: "MaskGCT", org: "Amphion/OpenMMLab", year: 2024, params: "N/A", arch: "Non-AR Masked", license: "CC-BY-NC-4.0", mos: 4.2, rtf: 0.10, params_m: 400 }
     ]
   },
 
@@ -345,7 +355,10 @@ const categories = {
       { name: "ModelScope T2V", org: "Alibaba", year: 2023, params: "1.7B", arch: "UNet Diffusion", license: "CC-BY-NC-4.0", quality: 55, duration: 2, resolution: 256 },
       { name: "LaVie", org: "Shanghai AI Lab", year: 2023, params: "3B", arch: "Cascaded LDM", license: "Apache 2.0", quality: 60, duration: 2, resolution: 512 },
       { name: "VideoCrafter2", org: "Tencent AI Lab", year: 2024, params: "2B", arch: "UNet Diffusion", license: "Apache 2.0", quality: 65, duration: 2, resolution: 512 },
-      { name: "Show-1", org: "NUS / Bytedance", year: 2023, params: "3B", arch: "Pixel+Latent Diffusion", license: "MIT", quality: 58, duration: 4, resolution: 576 }
+      { name: "Show-1", org: "NUS / Bytedance", year: 2023, params: "3B", arch: "Pixel+Latent Diffusion", license: "MIT", quality: 58, duration: 4, resolution: 576 },
+      { name: "Allegro", org: "Rhymes AI", year: 2024, params: "~3B", arch: "DiT+VAE", license: "Apache 2.0", quality: 77, duration: 6, resolution: 720 },
+      { name: "Pyramid Flow", org: "PKU/Kuaishou", year: 2024, params: "~2B", arch: "Flow Pyramid DiT", license: "MIT", quality: 84, duration: 10, resolution: 768 },
+      { name: "SkyReels V2", org: "Skywork AI", year: 2025, params: "13B", arch: "DiT+Infinite Length", license: "Apache 2.0", quality: 83, duration: 120, resolution: 1080 }
     ]
   },
 
@@ -369,7 +382,10 @@ const categories = {
       { name: "MiniGPT-4", org: "KAUST", year: 2023, params: "14B", arch: "EVA-CLIP+Vicuna", license: "BSD-3", mmmu: 25.0, mathvista: 28.0, docvqa: 45.0 },
       { name: "LLaVA 1.5 13B", org: "UWisc / Microsoft", year: 2023, params: "13B", arch: "CLIP+Vicuna", license: "Apache 2.0", mmmu: 33.6, mathvista: 35.0, docvqa: 67.0 },
       { name: "Fuyu-8B", org: "Adept AI", year: 2023, params: "8B", arch: "Patch Linear+Dec", license: "CC-BY-NC-4.0", mmmu: 27.9, mathvista: 30.0, docvqa: 55.0 },
-      { name: "PaLI-3 5B", org: "Google", year: 2023, params: "5B", arch: "SigLIP+UL2", license: "Apache 2.0", mmmu: 34.0, mathvista: 38.0, docvqa: 82.0 }
+      { name: "PaLI-3 5B", org: "Google", year: 2023, params: "5B", arch: "SigLIP+UL2", license: "Apache 2.0", mmmu: 34.0, mathvista: 38.0, docvqa: 82.0 },
+      { name: "Qwen3-VL 235B", org: "Alibaba", year: 2025, params: "235B", arch: "ViT+Qwen3 MoE", license: "Apache 2.0", mmmu: 74.5, mathvista: 75.0, docvqa: 98.0 },
+      { name: "LLaVA-NeXT 72B", org: "UWisc/ByteDance", year: 2024, params: "72B", arch: "SigLIP+Qwen2", license: "Research", mmmu: 58.2, mathvista: 68.0, docvqa: 92.5 },
+      { name: "Phi-3-Vision", org: "Microsoft", year: 2024, params: "4.2B", arch: "CLIP+Phi-3-mini", license: "MIT", mmmu: 40.5, mathvista: 44.5, docvqa: 78.0 }
     ]
   },
 
@@ -393,7 +409,11 @@ const categories = {
       { name: "E5-Large-v2", org: "Microsoft", year: 2023, params: "335M", arch: "BERT", license: "MIT", mteb: 62.25, dim: 1024, maxlen: 512 },
       { name: "all-MiniLM-L6-v2", org: "Microsoft", year: 2021, params: "22M", arch: "MiniLM Distill", license: "Apache 2.0", mteb: 56.26, dim: 384, maxlen: 256 },
       { name: "OpenAI text-embed-3L", org: "OpenAI (ref)", year: 2024, params: "N/A", arch: "Proprietary", license: "API Only", mteb: 64.59, dim: 3072, maxlen: 8191 },
-      { name: "Cohere Embed v3", org: "Cohere (ref)", year: 2024, params: "N/A", arch: "Proprietary", license: "API Only", mteb: 64.47, dim: 1024, maxlen: 512 }
+      { name: "Cohere Embed v3", org: "Cohere (ref)", year: 2024, params: "N/A", arch: "Proprietary", license: "API Only", mteb: 64.47, dim: 1024, maxlen: 512 },
+      { name: "BGE-M3", org: "BAAI", year: 2024, params: "568M", arch: "XLM-R+Hybrid", license: "MIT", mteb: 68.42, dim: 1024, maxlen: 8192 },
+      { name: "Nomic Embed v2 MoE", org: "Nomic AI", year: 2025, params: "475M", arch: "MoE BERT", license: "Apache 2.0", mteb: 65.80, dim: 768, maxlen: 8192 },
+      { name: "Snowflake Arctic L", org: "Snowflake", year: 2024, params: "303M", arch: "BERT+Matryoshka", license: "Apache 2.0", mteb: 67.15, dim: 1024, maxlen: 8192 },
+      { name: "all-mpnet-base-v2", org: "Microsoft", year: 2021, params: "110M", arch: "MPNet Distill", license: "Apache 2.0", mteb: 57.78, dim: 768, maxlen: 384 }
     ]
   }
 };

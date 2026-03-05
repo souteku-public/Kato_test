@@ -129,7 +129,7 @@
   <div class="container">
     <div>
       <h1>Open-Source AI Model Benchmark</h1>
-      <p>AIモデル総合性能比較 — 13ジャンル・240+モデル — 2026年3月更新</p>
+      <p>AIモデル総合性能比較 — 13ジャンル・245モデル — 2026年3月更新</p>
     </div>
   </div>
 </header>
@@ -255,6 +255,8 @@ const categories = {
       { key: "params_m", label: "パラメータ数", max: 700, unit: "M" }
     ],
     models: [
+      { name: "SAM 3", org: "Meta", year: 2025, params: "848M", arch: "Meta Perception Enc", license: "SAM License", miou: 82.0, params_m: 848, note: "概念セグメント+3D対応" },
+      { name: "SAM 3D", org: "Meta", year: 2025, params: "N/A", arch: "SAM3+3D Recon", license: "SAM License", miou: 80.0, params_m: 0, note: "単一画像→3D復元" },
       { name: "SAM 2.1 Large", org: "Meta", year: 2024, params: "224M", arch: "Hiera+Mem", license: "Apache 2.0", miou: 78.2, params_m: 224, note: "動画+画像 最新版" },
       { name: "SAM 2.1 Base+", org: "Meta", year: 2024, params: "80.8M", arch: "Hiera+Mem", license: "Apache 2.0", miou: 75.5, params_m: 80.8, note: "動画+画像 中量版" },
       { name: "SAM 2.1 Small", org: "Meta", year: 2024, params: "46M", arch: "Hiera+Mem", license: "Apache 2.0", miou: 73.0, params_m: 46, note: "動画+画像 軽量版" },

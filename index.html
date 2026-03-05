@@ -240,6 +240,7 @@
     .tier-s { background: var(--s-tier); color: #000; }
     .tier-a { background: var(--a-tier); color: #000; }
     .tier-b { background: var(--b-tier); color: #000; }
+    .tier-c { background: var(--c-tier); color: #000; }
 
     .models-grid {
       display: grid;
@@ -452,6 +453,7 @@
       <button class="filter-btn" data-filter="s">S Tier</button>
       <button class="filter-btn" data-filter="a">A Tier</button>
       <button class="filter-btn" data-filter="b">B Tier</button>
+      <button class="filter-btn" data-filter="c">C Tier</button>
       <button class="filter-btn" data-filter="moe">MoE</button>
       <button class="filter-btn" data-filter="dense">Dense</button>
     </div>
@@ -472,6 +474,12 @@
     <div class="tier-section" data-tier="b">
       <div class="tier-label"><span class="tier-badge tier-b">B</span> 優秀モデル（コスパ重視）</div>
       <div class="models-grid" id="tier-b"></div>
+    </div>
+
+    <!-- Tier C -->
+    <div class="tier-section" data-tier="c">
+      <div class="tier-label"><span class="tier-badge tier-c">C</span> 軽量モデル（エッジ／オンデバイス向け）</div>
+      <div class="models-grid" id="tier-c"></div>
     </div>
   </div>
 
@@ -529,10 +537,31 @@
 
 <script>
 const models = [
+  // --- S Tier ---
+  {
+    name: "GLM-5", org: "Zhipu AI", params: "744B (40B active)", paramsNum: 744, arch: "MoE",
+    tier: "s", license: "MIT", licenseClass: "license-mit", context: "128K",
+    arena: 1451, aime: 92.7, gpqa: 86.0, swe: 77.8
+  },
+  {
+    name: "Kimi K2.5", org: "Moonshot AI", params: "1T (32B active)", paramsNum: 1000, arch: "MoE",
+    tier: "s", license: "MIT", licenseClass: "license-mit", context: "262K",
+    arena: 1447, aime: 96.1, gpqa: 87.6, swe: 76.8
+  },
   {
     name: "Qwen 3.5", org: "Alibaba", params: "397B", paramsNum: 397, arch: "MoE",
     tier: "s", license: "Apache 2.0", licenseClass: "license-apache", context: "128K",
     arena: 1448, aime: 94.1, gpqa: 88.4, swe: 76.4
+  },
+  {
+    name: "MiniMax M2.5", org: "MiniMax", params: "456B", paramsNum: 456, arch: "MoE",
+    tier: "s", license: "Apache 2.0", licenseClass: "license-apache", context: "128K",
+    arena: 1420, aime: 86.3, gpqa: 85.2, swe: 80.2
+  },
+  {
+    name: "GLM-4.7", org: "Zhipu AI", params: "355B", paramsNum: 355, arch: "MoE",
+    tier: "s", license: "Apache 2.0", licenseClass: "license-apache", context: "200K",
+    arena: 1445, aime: 95.7, gpqa: 85.7, swe: 73.8
   },
   {
     name: "DeepSeek V3.2", org: "DeepSeek", params: "685B (37B active)", paramsNum: 685, arch: "MoE",
@@ -545,24 +574,15 @@ const models = [
     arena: 1430, aime: 87.5, gpqa: 71.5, swe: 49.2
   },
   {
-    name: "GLM-4.7", org: "Zhipu AI", params: "355B", paramsNum: 355, arch: "MoE",
-    tier: "s", license: "Apache 2.0", licenseClass: "license-apache", context: "128K",
-    arena: 1415, aime: 85.0, gpqa: 75.2, swe: 72.1
-  },
-  {
     name: "Mistral Large 3", org: "Mistral AI", params: "675B", paramsNum: 675, arch: "MoE",
     tier: "s", license: "Apache 2.0", licenseClass: "license-apache", context: "128K",
     arena: 1410, aime: 82.7, gpqa: 74.8, swe: 58.3
   },
+  // --- A Tier ---
   {
-    name: "Llama 4 Maverick", org: "Meta", params: "402B", paramsNum: 402, arch: "MoE",
-    tier: "a", license: "Llama 4", licenseClass: "license-llama", context: "1M",
-    arena: 1400, aime: 78.6, gpqa: 72.1, swe: 55.0
-  },
-  {
-    name: "Nemotron Ultra", org: "NVIDIA", params: "253B", paramsNum: 253, arch: "Dense",
-    tier: "a", license: "Apache 2.0", licenseClass: "license-apache", context: "128K",
-    arena: 1390, aime: 80.2, gpqa: 70.5, swe: 52.8
+    name: "Step-3.5-Flash", org: "StepFun", params: "196B", paramsNum: 196, arch: "MoE",
+    tier: "a", license: "Apache 2.0", licenseClass: "license-apache", context: "256K",
+    arena: 1385, aime: 97.3, gpqa: 73.0, swe: 50.1
   },
   {
     name: "Qwen 3 235B", org: "Alibaba", params: "235B", paramsNum: 235, arch: "Dense",
@@ -570,9 +590,30 @@ const models = [
     arena: 1422, aime: 92.3, gpqa: 82.6, swe: 55.7
   },
   {
-    name: "Step-3.5-Flash", org: "StepFun", params: "196B", paramsNum: 196, arch: "MoE",
-    tier: "a", license: "Apache 2.0", licenseClass: "license-apache", context: "256K",
-    arena: 1385, aime: 97.3, gpqa: 73.0, swe: 50.1
+    name: "Llama 4 Maverick", org: "Meta", params: "402B", paramsNum: 402, arch: "MoE",
+    tier: "a", license: "Llama 4", licenseClass: "license-llama", context: "1M",
+    arena: 1400, aime: 78.6, gpqa: 72.1, swe: 55.0
+  },
+  {
+    name: "Hunyuan 2.0", org: "Tencent", params: "406B", paramsNum: 406, arch: "MoE",
+    tier: "a", license: "Apache 2.0", licenseClass: "license-apache", context: "128K",
+    arena: 1395, aime: 80.0, gpqa: 71.8, swe: 53.5
+  },
+  {
+    name: "Nemotron Ultra", org: "NVIDIA", params: "253B", paramsNum: 253, arch: "Dense",
+    tier: "a", license: "Apache 2.0", licenseClass: "license-apache", context: "128K",
+    arena: 1390, aime: 80.2, gpqa: 70.5, swe: 52.8
+  },
+  {
+    name: "DeepSeek V3.2-Speciale", org: "DeepSeek", params: "685B (37B active)", paramsNum: 685, arch: "MoE",
+    tier: "a", license: "MIT", licenseClass: "license-mit", context: "128K",
+    arena: 1405, aime: 91.0, gpqa: 82.0, swe: 60.5
+  },
+  // --- B Tier ---
+  {
+    name: "Devstral 2 123B", org: "Mistral AI", params: "123B", paramsNum: 123, arch: "Dense",
+    tier: "b", license: "Apache 2.0", licenseClass: "license-apache", context: "128K",
+    arena: 1340, aime: 60.5, gpqa: 58.0, swe: 72.2
   },
   {
     name: "Llama 3.3 70B", org: "Meta", params: "70B", paramsNum: 70, arch: "Dense",
@@ -585,9 +626,50 @@ const models = [
     arena: 1310, aime: 48.6, gpqa: 52.1, swe: 33.5
   },
   {
+    name: "EXAONE Deep 32B", org: "LG AI Research", params: "32B", paramsNum: 32, arch: "Dense",
+    tier: "b", license: "EXAONE", licenseClass: "license-llama", context: "32K",
+    arena: 1300, aime: 76.0, gpqa: 66.1, swe: 30.0
+  },
+  {
     name: "Gemma 3 27B", org: "Google", params: "27B", paramsNum: 27, arch: "Dense",
     tier: "b", license: "Gemma", licenseClass: "license-llama", context: "128K",
     arena: 1295, aime: 40.2, gpqa: 48.7, swe: 28.3
+  },
+  {
+    name: "Phi-4-Reasoning-Plus", org: "Microsoft", params: "14B", paramsNum: 14, arch: "Dense",
+    tier: "b", license: "MIT", licenseClass: "license-mit", context: "32K",
+    arena: 1285, aime: 82.5, gpqa: 65.8, swe: 28.0
+  },
+  // --- C Tier (small / edge models) ---
+  {
+    name: "Gemma 3 12B", org: "Google", params: "12B", paramsNum: 12, arch: "Dense",
+    tier: "c", license: "Gemma", licenseClass: "license-llama", context: "128K",
+    arena: 1240, aime: 30.5, gpqa: 40.2, swe: 20.1
+  },
+  {
+    name: "EXAONE Deep 7.8B", org: "LG AI Research", params: "7.8B", paramsNum: 7.8, arch: "Dense",
+    tier: "c", license: "EXAONE", licenseClass: "license-llama", context: "32K",
+    arena: 1210, aime: 59.6, gpqa: 52.0, swe: 18.5
+  },
+  {
+    name: "MiMo 7B", org: "Xiaomi", params: "7B", paramsNum: 7, arch: "Dense",
+    tier: "c", license: "Apache 2.0", licenseClass: "license-apache", context: "32K",
+    arena: 1195, aime: 70.2, gpqa: 60.6, swe: 15.8
+  },
+  {
+    name: "Ministral 8B", org: "Mistral AI", params: "8B", paramsNum: 8, arch: "Dense",
+    tier: "c", license: "Apache 2.0", licenseClass: "license-apache", context: "128K",
+    arena: 1220, aime: 32.0, gpqa: 38.5, swe: 22.0
+  },
+  {
+    name: "Phi-4-mini", org: "Microsoft", params: "3.8B", paramsNum: 3.8, arch: "Dense",
+    tier: "c", license: "MIT", licenseClass: "license-mit", context: "16K",
+    arena: 1150, aime: 35.0, gpqa: 52.0, swe: 12.0
+  },
+  {
+    name: "Qwen 3 4B", org: "Alibaba", params: "4B", paramsNum: 4, arch: "Dense",
+    tier: "c", license: "Apache 2.0", licenseClass: "license-apache", context: "32K",
+    arena: 1170, aime: 38.0, gpqa: 42.5, swe: 14.2
   }
 ];
 
@@ -629,7 +711,7 @@ function benchBar(label, val, max) {
 }
 
 // Render tier cards
-["s", "a", "b"].forEach(tier => {
+["s", "a", "b", "c"].forEach(tier => {
   const grid = document.getElementById("tier-" + tier);
   grid.innerHTML = models.filter(m => m.tier === tier).map(createCard).join("");
 });
@@ -751,14 +833,14 @@ document.querySelectorAll(".filter-btn").forEach(btn => {
     const f = btn.dataset.filter;
     document.querySelectorAll(".tier-section").forEach(s => {
       if (f === "all") { s.style.display = ""; return; }
-      if (["s","a","b"].includes(f)) {
+      if (["s","a","b","c"].includes(f)) {
         s.style.display = s.dataset.tier === f ? "" : "none";
       } else {
         s.style.display = "";
       }
     });
     document.querySelectorAll(".model-card").forEach(c => {
-      if (f === "all" || ["s","a","b"].includes(f)) { c.style.display = ""; return; }
+      if (f === "all" || ["s","a","b","c"].includes(f)) { c.style.display = ""; return; }
       c.style.display = c.dataset.arch === f ? "" : "none";
     });
   });

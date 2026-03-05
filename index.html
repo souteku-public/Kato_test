@@ -129,7 +129,7 @@
   <div class="container">
     <div>
       <h1>Open-Source AI Model Benchmark</h1>
-      <p>AIモデル総合性能比較 — 13ジャンル・295モデル — 2026年3月5日更新</p>
+      <p>AIモデル総合性能比較 — 13ジャンル・309モデル — 2026年3月5日更新</p>
     </div>
   </div>
 </header>
@@ -318,7 +318,9 @@ const categories = {
       // === 2025-2026 ===
       { name: "ElevenLabs Scribe v2", org: "ElevenLabs", year: 2026, params: "N/A", arch: "Proprietary STT", license: "Proprietary", wer: 1.0, params_m: 0, langs: 90 },
       { name: "GPT-4o-transcribe", org: "OpenAI", year: 2025, params: "N/A", arch: "GPT-4o ASR", license: "Proprietary", wer: 1.5, params_m: 0, langs: 100 },
-      { name: "Deepgram Nova 3", org: "Deepgram", year: 2025, params: "N/A", arch: "Proprietary ASR", license: "Proprietary", wer: 1.2, params_m: 0, langs: 50 },
+      { name: "AssemblyAI Uni-3 Pro", org: "AssemblyAI", year: 2025, params: "N/A", arch: "Proprietary STT", license: "Proprietary", wer: 1.3, params_m: 0, langs: 99 },
+      { name: "Deepgram Nova 3", org: "Deepgram", year: 2025, params: "N/A", arch: "Proprietary ASR", license: "Proprietary", wer: 1.2, params_m: 0, langs: 30 },
+      { name: "Google USM/Chirp", org: "Google", year: 2025, params: "2B", arch: "Universal Speech", license: "Proprietary", wer: 1.8, params_m: 2000, langs: 300 },
       { name: "Whisper Large-v3 Turbo", org: "OpenAI", year: 2024, params: "809M", arch: "Distilled Enc-Dec", license: "MIT", wer: 3.0, params_m: 809, langs: 100 },
       { name: "Whisper Large-v3", org: "OpenAI", year: 2023, params: "1.55B", arch: "Enc-Dec Trans", license: "MIT", wer: 2.7, params_m: 1550, langs: 100 },
       { name: "Whisper Medium", org: "OpenAI", year: 2022, params: "769M", arch: "Enc-Dec Trans", license: "MIT", wer: 4.2, params_m: 769, langs: 100 },
@@ -399,7 +401,9 @@ const categories = {
       { name: "Piper", org: "Rhasspy", year: 2023, params: "20M", arch: "VITS (Optimized)", license: "MIT", mos: 3.6, rtf: 0.005, params_m: 20 },
       { name: "OpenVoice V2", org: "MyShell", year: 2024, params: "50M", arch: "Base+Tone Clone", license: "MIT", mos: 3.9, rtf: 0.10, params_m: 50 },
       { name: "Kokoro", org: "Kokoro Project", year: 2024, params: "82M", arch: "StyleTTS-based", license: "Apache 2.0", mos: 4.1, rtf: 0.05, params_m: 82 },
-      { name: "Eleven v3 TTS", org: "ElevenLabs", year: 2026, params: "N/A", arch: "LLM Expressive", license: "Proprietary", mos: 4.7, rtf: 0.08, params_m: 0 },
+      { name: "Eleven v3 TTS", org: "ElevenLabs", year: 2026, params: "N/A", arch: "LLM Expressive 70+lang", license: "Proprietary", mos: 4.7, rtf: 0.08, params_m: 0 },
+      { name: "OpenAudio S1", org: "Fish Audio", year: 2025, params: "N/A", arch: "#1 TTS-Arena", license: "Open Source", mos: 4.6, rtf: 0.10, params_m: 0 },
+      { name: "ElevenLabs Flash 2.5", org: "ElevenLabs", year: 2025, params: "N/A", arch: "Sub-100ms TTFB", license: "Proprietary", mos: 4.5, rtf: 0.05, params_m: 0 },
       { name: "Orpheus TTS 3B", org: "Canopy Labs", year: 2025, params: "3B", arch: "LLM-based TTS", license: "Apache 2.0", mos: 4.4, rtf: 0.18, params_m: 3000 },
       { name: "Chatterbox", org: "Resemble AI", year: 2025, params: "N/A", arch: "LLM+Diffusion", license: "MIT", mos: 4.3, rtf: 0.15, params_m: 500 },
       { name: "MaskGCT", org: "Amphion/OpenMMLab", year: 2024, params: "N/A", arch: "Non-AR Masked", license: "CC-BY-NC-4.0", mos: 4.2, rtf: 0.10, params_m: 400 },
@@ -491,6 +495,14 @@ const categories = {
       { key: "maxlen", label: "最大トークン", max: 32768, unit: "" }
     ],
     models: [
+      // === 2026 ===
+      { name: "Voyage 4 Large", org: "Voyage AI", year: 2026, params: "N/A", arch: "MoE Embed", license: "Apache 2.0", mteb: 73.0, dim: 2048, maxlen: 32768 },
+      { name: "Voyage 4 Nano", org: "Voyage AI", year: 2026, params: "N/A", arch: "Dense (Open)", license: "Apache 2.0", mteb: 64.0, dim: 1024, maxlen: 32768 },
+      // === 2025 ===
+      { name: "Jina Embeddings v4", org: "Jina AI", year: 2025, params: "3.8B", arch: "Qwen2.5-VL+LoRA", license: "CC-BY-NC-4.0", mteb: 66.5, dim: 2048, maxlen: 8192 },
+      { name: "Cohere Embed v4", org: "Cohere", year: 2025, params: "N/A", arch: "Multimodal Embed", license: "API Only", mteb: 65.2, dim: 1536, maxlen: 128000 },
+      { name: "Gemini Embed 001", org: "Google", year: 2025, params: "N/A", arch: "Gemini Embed", license: "API Only", mteb: 66.0, dim: 3072, maxlen: 8192 },
+      // === 2024 ===
       { name: "GTE-Qwen2-7B", org: "Alibaba", year: 2024, params: "7B", arch: "Qwen2 Bidir", license: "Apache 2.0", mteb: 72.05, dim: 3584, maxlen: 32768 },
       { name: "NV-Embed-v2", org: "NVIDIA", year: 2024, params: "7.8B", arch: "Mistral+Latent Attn", license: "CC-BY-NC-4.0", mteb: 72.31, dim: 4096, maxlen: 32768 },
       { name: "BGE-en-icl", org: "BAAI", year: 2024, params: "7B", arch: "Mistral+ICL", license: "Apache 2.0", mteb: 71.50, dim: 4096, maxlen: 32768 },
@@ -572,11 +584,17 @@ const categories = {
       { key: "params_m", label: "パラメータ数", max: 250000, unit: "M" }
     ],
     models: [
-      // === 2025 Coding Agents & Models ===
-      { name: "Claude Code (Opus 4)", org: "Anthropic", year: 2025, params: "N/A", arch: "Agentic Coding", license: "Proprietary", humaneval: 92.0, swe: 72.5, params_m: 0 },
+      // === 2026 ===
+      { name: "GPT-5.3-Codex", org: "OpenAI", year: 2026, params: "N/A", arch: "Omni Codex 400K", license: "Proprietary", humaneval: 95.0, swe: 82.0, params_m: 0 },
+      { name: "Claude Code (Opus 4.6)", org: "Anthropic", year: 2026, params: "N/A", arch: "Agentic 1M ctx", license: "Proprietary", humaneval: 95.0, swe: 79.6, params_m: 0 },
+      { name: "Qwen3-Coder-Next 80B", org: "Alibaba", year: 2026, params: "80B (3B act)", arch: "MoE", license: "Open-weight", humaneval: 92.0, swe: 70.0, params_m: 80000 },
+      // === 2025 Coding ===
+      { name: "GPT-5.2-Codex", org: "OpenAI", year: 2025, params: "N/A", arch: "Omni Codex 400K", license: "Proprietary", humaneval: 93.0, swe: 80.0, params_m: 0 },
+      { name: "Claude Sonnet 4.5 Code", org: "Anthropic", year: 2025, params: "N/A", arch: "Hybrid 200K", license: "Proprietary", humaneval: 93.0, swe: 77.2, params_m: 0 },
+      { name: "Gemini 3.1 Pro Code", org: "Google DeepMind", year: 2026, params: "N/A", arch: "MoE 1M ctx", license: "Proprietary", humaneval: 94.0, swe: 80.4, params_m: 0 },
+      { name: "Qwen3-Coder 480B", org: "Alibaba", year: 2025, params: "480B (35B act)", arch: "MoE 256K", license: "Open-weight", humaneval: 95.0, swe: 65.0, params_m: 480000 },
       { name: "Devstral 2", org: "Mistral AI", year: 2025, params: "24B", arch: "MoE Agent", license: "Apache 2.0", humaneval: 85.0, swe: 72.2, params_m: 24000 },
-      { name: "Codestral 25.01", org: "Mistral AI", year: 2025, params: "22B", arch: "Dense Transformer", license: "MNPL", humaneval: 88.5, swe: 42.0, params_m: 22000 },
-      { name: "Qwen3-Coder", org: "Alibaba", year: 2025, params: "235B", arch: "MoE Transformer", license: "Apache 2.0", humaneval: 95.0, swe: 65.0, params_m: 235000 },
+      { name: "Codestral 25.01", org: "Mistral AI", year: 2025, params: "N/A", arch: "Dense 256K 80+ lang", license: "Proprietary", humaneval: 88.5, swe: 42.0, params_m: 0 },
       { name: "OpenHands CodeAct", org: "AllHands AI", year: 2025, params: "N/A", arch: "LLM Agent", license: "MIT", humaneval: 0, swe: 53.0, params_m: 0 },
       { name: "Devin v2", org: "Cognition", year: 2025, params: "N/A", arch: "Autonomous Agent", license: "Proprietary", humaneval: 0, swe: 55.0, params_m: 0 },
       // === 2024 Models ===

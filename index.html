@@ -76,6 +76,148 @@
       border-color: var(--accent);
     }
 
+    /* View Mode Toggle */
+    .view-toggle {
+      display: flex;
+      gap: 4px;
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 4px;
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+      width: fit-content;
+    }
+    .view-btn {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text2);
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .view-btn.active {
+      background: var(--accent);
+      color: #fff;
+    }
+    .view-btn:hover:not(.active) { color: var(--text); }
+
+    /* Capability View */
+    .capability-view { display: none; }
+    .capability-view.visible { display: block; }
+    .tier-view.hidden { display: none; }
+
+    .capability-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(580px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .capability-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .capability-panel-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .capability-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .cap-reasoning .capability-icon { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+    .cap-coding .capability-icon { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
+    .cap-knowledge .capability-icon { background: rgba(96, 165, 250, 0.15); color: #60a5fa; }
+    .cap-overall .capability-icon { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+    .capability-panel-title { font-weight: 700; font-size: 1rem; }
+    .capability-panel-sub { font-size: 0.75rem; color: var(--text2); }
+
+    .cap-rank-list { display: flex; flex-direction: column; gap: 6px; }
+    .cap-rank-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+    }
+    .cap-rank-num {
+      width: 24px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .cap-rank-num.gold { color: #ffd700; }
+    .cap-rank-num.silver { color: #c0c0c0; }
+    .cap-rank-num.bronze { color: #cd7f32; }
+    .cap-rank-name {
+      width: 140px;
+      flex-shrink: 0;
+      font-weight: 600;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cap-rank-bar-wrap {
+      flex: 1;
+      height: 22px;
+      background: var(--surface2);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    .cap-rank-bar {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.6s ease;
+    }
+    .cap-reasoning .cap-rank-bar { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+    .cap-coding .cap-rank-bar { background: linear-gradient(90deg, #16a34a, #4ade80); }
+    .cap-knowledge .cap-rank-bar { background: linear-gradient(90deg, #2563eb, #60a5fa); }
+    .cap-overall .cap-rank-bar { background: linear-gradient(90deg, #7c3aed, #a855f7); }
+    .cap-rank-score {
+      width: 50px;
+      text-align: right;
+      font-weight: 700;
+      font-size: 0.85rem;
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+    .cap-rank-org {
+      width: 80px;
+      font-size: 0.7rem;
+      color: var(--text2);
+      flex-shrink: 0;
+      text-align: right;
+    }
+
+    .cap-detail-toggle {
+      margin-top: 12px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text2);
+      cursor: pointer;
+      font-size: 0.75rem;
+      transition: all 0.2s;
+    }
+    .cap-detail-toggle:hover { color: var(--text); border-color: var(--text2); }
+
     /* Tier Cards */
     .tier-section { margin-bottom: 32px; }
     .tier-label {
@@ -274,7 +416,10 @@
 
     @media (max-width: 640px) {
       .models-grid { grid-template-columns: 1fr; }
+      .capability-grid { grid-template-columns: 1fr; }
       .bench-label { width: 80px; font-size: 0.7rem; }
+      .cap-rank-name { width: 100px; }
+      .cap-rank-org { display: none; }
       header h1 { font-size: 1.2rem; }
     }
   </style>
@@ -293,32 +438,46 @@
 
 <main class="container">
 
-  <!-- Filters -->
-  <div class="filters">
-    <button class="filter-btn active" data-filter="all">すべて</button>
-    <button class="filter-btn" data-filter="s">S Tier</button>
-    <button class="filter-btn" data-filter="a">A Tier</button>
-    <button class="filter-btn" data-filter="b">B Tier</button>
-    <button class="filter-btn" data-filter="moe">MoE</button>
-    <button class="filter-btn" data-filter="dense">Dense</button>
+  <!-- View Mode Toggle -->
+  <div class="view-toggle">
+    <button class="view-btn active" data-view="tier">ティア別</button>
+    <button class="view-btn" data-view="capability">機能別</button>
   </div>
 
-  <!-- Tier S -->
-  <div class="tier-section" data-tier="s">
-    <div class="tier-label"><span class="tier-badge tier-s">S</span> 最高性能モデル</div>
-    <div class="models-grid" id="tier-s"></div>
+  <!-- Tier View -->
+  <div class="tier-view" id="tier-view">
+    <!-- Filters -->
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">すべて</button>
+      <button class="filter-btn" data-filter="s">S Tier</button>
+      <button class="filter-btn" data-filter="a">A Tier</button>
+      <button class="filter-btn" data-filter="b">B Tier</button>
+      <button class="filter-btn" data-filter="moe">MoE</button>
+      <button class="filter-btn" data-filter="dense">Dense</button>
+    </div>
+
+    <!-- Tier S -->
+    <div class="tier-section" data-tier="s">
+      <div class="tier-label"><span class="tier-badge tier-s">S</span> 最高性能モデル</div>
+      <div class="models-grid" id="tier-s"></div>
+    </div>
+
+    <!-- Tier A -->
+    <div class="tier-section" data-tier="a">
+      <div class="tier-label"><span class="tier-badge tier-a">A</span> 高性能モデル</div>
+      <div class="models-grid" id="tier-a"></div>
+    </div>
+
+    <!-- Tier B -->
+    <div class="tier-section" data-tier="b">
+      <div class="tier-label"><span class="tier-badge tier-b">B</span> 優秀モデル（コスパ重視）</div>
+      <div class="models-grid" id="tier-b"></div>
+    </div>
   </div>
 
-  <!-- Tier A -->
-  <div class="tier-section" data-tier="a">
-    <div class="tier-label"><span class="tier-badge tier-a">A</span> 高性能モデル</div>
-    <div class="models-grid" id="tier-a"></div>
-  </div>
-
-  <!-- Tier B -->
-  <div class="tier-section" data-tier="b">
-    <div class="tier-label"><span class="tier-badge tier-b">B</span> 優秀モデル（コスパ重視）</div>
-    <div class="models-grid" id="tier-b"></div>
+  <!-- Capability View -->
+  <div class="capability-view" id="capability-view">
+    <div class="capability-grid" id="capability-grid"></div>
   </div>
 
   <!-- Comparison Table -->
@@ -474,6 +633,75 @@ function benchBar(label, val, max) {
   const grid = document.getElementById("tier-" + tier);
   grid.innerHTML = models.filter(m => m.tier === tier).map(createCard).join("");
 });
+
+// --- View Mode Toggle ---
+document.querySelectorAll(".view-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".view-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    const view = btn.dataset.view;
+    document.getElementById("tier-view").classList.toggle("hidden", view !== "tier");
+    document.getElementById("capability-view").classList.toggle("visible", view === "capability");
+  });
+});
+
+// --- Capability View ---
+const capabilities = [
+  {
+    key: "overall", field: "arena", max: 1500, icon: "&#9733;", cls: "cap-overall",
+    title: "総合力", sub: "Chatbot Arena Rating — 人間の評価に基づく総合ランキング",
+    format: v => v
+  },
+  {
+    key: "reasoning", field: "aime", max: 100, icon: "&#9889;", cls: "cap-reasoning",
+    title: "推論力", sub: "AIME 2025 — 数学的推論・問題解決能力",
+    format: v => v + "%"
+  },
+  {
+    key: "knowledge", field: "gpqa", max: 100, icon: "&#128218;", cls: "cap-knowledge",
+    title: "知識力", sub: "GPQA Diamond — 大学院レベルの専門知識",
+    format: v => v + "%"
+  },
+  {
+    key: "coding", field: "swe", max: 100, icon: "&#128187;", cls: "cap-coding",
+    title: "コーディング", sub: "SWE-bench Verified — 実際のGitHub Issue解決能力",
+    format: v => v + "%"
+  }
+];
+
+function renderCapabilityView() {
+  const grid = document.getElementById("capability-grid");
+  grid.innerHTML = capabilities.map(cap => {
+    const sorted = [...models].sort((a, b) => b[cap.field] - a[cap.field]);
+    const topVal = sorted[0][cap.field];
+    const items = sorted.map((m, i) => {
+      const pct = (m[cap.field] / cap.max) * 100;
+      const rankCls = i === 0 ? "gold" : i === 1 ? "silver" : i === 2 ? "bronze" : "";
+      return `
+        <div class="cap-rank-item">
+          <span class="cap-rank-num ${rankCls}">${i + 1}</span>
+          <span class="cap-rank-name">${m.name}</span>
+          <div class="cap-rank-bar-wrap">
+            <div class="cap-rank-bar" style="width:${pct}%"></div>
+          </div>
+          <span class="cap-rank-score">${cap.format(m[cap.field])}</span>
+          <span class="cap-rank-org">${m.org}</span>
+        </div>`;
+    }).join("");
+    return `
+      <div class="capability-panel ${cap.cls}">
+        <div class="capability-panel-header">
+          <div class="capability-icon">${cap.icon}</div>
+          <div>
+            <div class="capability-panel-title">${cap.title}</div>
+            <div class="capability-panel-sub">${cap.sub}</div>
+          </div>
+        </div>
+        <div class="cap-rank-list">${items}</div>
+      </div>`;
+  }).join("");
+}
+renderCapabilityView();
 
 // Render table
 function renderTable(sortCol = "arena", asc = false) {

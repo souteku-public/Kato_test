@@ -129,7 +129,7 @@
   <div class="container">
     <div>
       <h1>Open-Source AI Model Benchmark</h1>
-      <p>オープンソースAIモデル総合性能比較 — 13ジャンル・210+モデル — 2026年3月更新</p>
+      <p>AIモデル総合性能比較 — 13ジャンル・235+モデル — 2026年3月更新</p>
     </div>
   </div>
 </header>
@@ -203,7 +203,19 @@ const categories = {
       { name: "Mixtral 8x7B", org: "Mistral AI", year: 2023, params: "47B (13B active)", arch: "MoE", license: "Apache 2.0", arena: 1180, aime: 12.0, gpqa: 33.0, swe: 10.0 },
       { name: "Phi-2", org: "Microsoft", year: 2023, params: "2.7B", arch: "Dense", license: "MIT", arena: 1050, aime: 5.0, gpqa: 22.0, swe: 3.0 },
       { name: "Llama 3.1 405B", org: "Meta", year: 2024, params: "405B", arch: "Dense", license: "Llama 3.1", arena: 1360, aime: 60.0, gpqa: 60.0, swe: 40.0 },
-      { name: "GPT-Neo 2.7B", org: "EleutherAI", year: 2021, params: "2.7B", arch: "Dense", license: "MIT", arena: 0, aime: 0, gpqa: 0, swe: 0 }
+      { name: "GPT-Neo 2.7B", org: "EleutherAI", year: 2021, params: "2.7B", arch: "Dense", license: "MIT", arena: 0, aime: 0, gpqa: 0, swe: 0 },
+      { name: "Grok-3", org: "xAI", year: 2025, params: "N/A (200K GPU)", arch: "Dense", license: "Proprietary", arena: 1402, aime: 93.3, gpqa: 84.6, swe: 49.0 },
+      { name: "GPT-4.5 (Orion)", org: "OpenAI", year: 2025, params: "N/A", arch: "Dense", license: "Proprietary", arena: 1380, aime: 55.0, gpqa: 65.0, swe: 45.0 },
+      { name: "OpenAI o3-mini", org: "OpenAI", year: 2025, params: "N/A", arch: "CoT Reasoning", license: "Proprietary", arena: 1410, aime: 95.8, gpqa: 79.0, swe: 50.0 },
+      { name: "OpenAI o1", org: "OpenAI", year: 2024, params: "N/A", arch: "CoT Reasoning", license: "Proprietary", arena: 1380, aime: 83.0, gpqa: 78.0, swe: 48.0 },
+      { name: "Claude 3.7 Sonnet", org: "Anthropic", year: 2025, params: "N/A", arch: "Hybrid Reasoning", license: "Proprietary", arena: 1390, aime: 64.6, gpqa: 74.0, swe: 62.3 },
+      { name: "Gemini 2.0 Pro", org: "Google DeepMind", year: 2025, params: "N/A", arch: "Dense", license: "Proprietary", arena: 1375, aime: 60.0, gpqa: 70.0, swe: 45.0 },
+      { name: "Gemini 2.0 Flash-Lite", org: "Google DeepMind", year: 2025, params: "N/A", arch: "Dense", license: "Proprietary", arena: 1280, aime: 35.0, gpqa: 48.0, swe: 25.0 },
+      { name: "Phi-4 14B", org: "Microsoft", year: 2024, params: "14B", arch: "Dense", license: "MIT", arena: 1260, aime: 65.0, gpqa: 56.0, swe: 22.0 },
+      { name: "Phi-4-mini 3.8B", org: "Microsoft", year: 2025, params: "3.8B", arch: "Dense", license: "MIT", arena: 1150, aime: 40.0, gpqa: 38.0, swe: 12.0 },
+      { name: "Gemma 2 27B", org: "Google", year: 2024, params: "27B", arch: "Dense", license: "Apache 2.0", arena: 1250, aime: 30.0, gpqa: 42.0, swe: 18.0 },
+      { name: "Mistral Large 2", org: "Mistral AI", year: 2024, params: "123B", arch: "Dense", license: "Mistral Research", arena: 1330, aime: 45.0, gpqa: 58.0, swe: 35.0 },
+      { name: "Grok-3 Mini", org: "xAI", year: 2025, params: "N/A", arch: "CoT Reasoning", license: "Proprietary", arena: 1370, aime: 95.8, gpqa: 80.4, swe: 42.0 }
     ]
   },
 
@@ -241,7 +253,11 @@ const categories = {
       { key: "params_m", label: "パラメータ数", max: 700, unit: "M" }
     ],
     models: [
-      { name: "SAM 2.1", org: "Meta", year: 2024, params: "224M", arch: "Hiera+Mem", license: "Apache 2.0", miou: 78.2, params_m: 224, note: "動画+画像セグメント" },
+      { name: "SAM 2.1 Large", org: "Meta", year: 2024, params: "224M", arch: "Hiera+Mem", license: "Apache 2.0", miou: 78.2, params_m: 224, note: "動画+画像 最新版" },
+      { name: "SAM 2.1 Base+", org: "Meta", year: 2024, params: "80.8M", arch: "Hiera+Mem", license: "Apache 2.0", miou: 75.5, params_m: 80.8, note: "動画+画像 中量版" },
+      { name: "SAM 2.1 Small", org: "Meta", year: 2024, params: "46M", arch: "Hiera+Mem", license: "Apache 2.0", miou: 73.0, params_m: 46, note: "動画+画像 軽量版" },
+      { name: "SAM 2.1 Tiny", org: "Meta", year: 2024, params: "38.9M", arch: "Hiera+Mem", license: "Apache 2.0", miou: 70.5, params_m: 38.9, note: "動画+画像 超軽量" },
+      { name: "SAM 2.0", org: "Meta", year: 2024, params: "224M", arch: "Hiera+Mem", license: "Apache 2.0", miou: 76.8, params_m: 224, note: "初代SAM2 44FPS" },
       { name: "SAM (ViT-H)", org: "Meta", year: 2023, params: "636M", arch: "ViT-H+Prompt", license: "Apache 2.0", miou: 76.5, params_m: 636, note: "ゼロショットセグメント" },
       { name: "Mask2Former", org: "Meta", year: 2022, params: "216M", arch: "Swin-L+MaskTrans", license: "MIT", miou: 57.8, params_m: 216, note: "ADE20K Panoptic" },
       { name: "OneFormer", org: "SHI Labs", year: 2022, params: "220M", arch: "DiNAT-L+Unified", license: "MIT", miou: 58.0, params_m: 220, note: "ADE20K Panoptic" },
@@ -399,7 +415,10 @@ const categories = {
       { name: "PaLI-3 5B", org: "Google", year: 2023, params: "5B", arch: "SigLIP+UL2", license: "Apache 2.0", mmmu: 34.0, mathvista: 38.0, docvqa: 82.0 },
       { name: "Qwen3-VL 235B", org: "Alibaba", year: 2025, params: "235B", arch: "ViT+Qwen3 MoE", license: "Apache 2.0", mmmu: 74.5, mathvista: 75.0, docvqa: 98.0 },
       { name: "LLaVA-NeXT 72B", org: "UWisc/ByteDance", year: 2024, params: "72B", arch: "SigLIP+Qwen2", license: "Research", mmmu: 58.2, mathvista: 68.0, docvqa: 92.5 },
-      { name: "Phi-3-Vision", org: "Microsoft", year: 2024, params: "4.2B", arch: "CLIP+Phi-3-mini", license: "MIT", mmmu: 40.5, mathvista: 44.5, docvqa: 78.0 }
+      { name: "Phi-3-Vision", org: "Microsoft", year: 2024, params: "4.2B", arch: "CLIP+Phi-3-mini", license: "MIT", mmmu: 40.5, mathvista: 44.5, docvqa: 78.0 },
+      { name: "Qwen2.5-VL-7B", org: "Alibaba", year: 2025, params: "7B", arch: "ViT+Qwen2.5", license: "Apache 2.0", mmmu: 58.5, mathvista: 62.0, docvqa: 92.0 },
+      { name: "Qwen2.5-VL-3B", org: "Alibaba", year: 2025, params: "3B", arch: "ViT+Qwen2.5", license: "Apache 2.0", mmmu: 48.0, mathvista: 52.0, docvqa: 85.0 },
+      { name: "Gemma 3 27B VLM", org: "Google", year: 2025, params: "27B", arch: "SigLIP+Gemma3", license: "Gemma", mmmu: 64.0, mathvista: 65.0, docvqa: 90.5 }
     ]
   },
 

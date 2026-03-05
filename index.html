@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>オープンソースAIモデル性能比較 2026</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d2e;
+      --surface2: #242840;
+      --border: #2e3350;
+      --text: #e2e4f0;
+      --text2: #8b8fa8;
+      --accent: #6c72cb;
+      --accent2: #cb69c1;
+      --s-tier: #ffd700;
+      --a-tier: #4ade80;
+      --b-tier: #60a5fa;
+      --c-tier: #a78bfa;
+      --green: #22c55e;
+      --red: #ef4444;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 24px 0;
+    }
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    header h1 {
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    header p { color: var(--text2); font-size: 0.875rem; }
+
+    /* Filters */
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 24px 0;
+    }
+    .filter-btn {
+      padding: 6px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text2);
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    /* Tier Cards */
+    .tier-section { margin-bottom: 32px; }
+    .tier-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .tier-badge {
+      display: inline-block;
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      text-align: center;
+      line-height: 32px;
+      font-weight: 900;
+      font-size: 1rem;
+    }
+    .tier-s { background: var(--s-tier); color: #000; }
+    .tier-a { background: var(--a-tier); color: #000; }
+    .tier-b { background: var(--b-tier); color: #000; }
+
+    .models-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 16px;
+    }
+
+    .model-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: default;
+    }
+    .model-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .model-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .model-name { font-size: 1.1rem; font-weight: 700; }
+    .model-org { font-size: 0.8rem; color: var(--text2); margin-top: 2px; }
+    .model-params {
+      font-size: 0.75rem;
+      background: var(--surface2);
+      padding: 4px 10px;
+      border-radius: 12px;
+      color: var(--text2);
+      white-space: nowrap;
+    }
+
+    .model-meta {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .meta-tag {
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--surface2);
+      color: var(--text2);
+    }
+    .license-mit { color: var(--green); border: 1px solid var(--green); background: transparent; }
+    .license-apache { color: #60a5fa; border: 1px solid #60a5fa; background: transparent; }
+    .license-llama { color: #f59e0b; border: 1px solid #f59e0b; background: transparent; }
+
+    /* Benchmark Bars */
+    .benchmarks { display: flex; flex-direction: column; gap: 8px; }
+    .bench-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+    }
+    .bench-label {
+      width: 110px;
+      flex-shrink: 0;
+      color: var(--text2);
+      text-align: right;
+    }
+    .bench-bar-bg {
+      flex: 1;
+      height: 20px;
+      background: var(--surface2);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    .bench-bar {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width 0.8s ease;
+    }
+    .bench-value {
+      width: 40px;
+      flex-shrink: 0;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Comparison Table */
+    .table-section { margin: 48px 0; }
+    .table-section h2 {
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    th {
+      background: var(--surface2);
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      white-space: nowrap;
+      position: sticky;
+      top: 0;
+      cursor: pointer;
+      user-select: none;
+    }
+    th:hover { color: var(--accent); }
+    th .sort-icon { margin-left: 4px; opacity: 0.4; }
+    th.sorted .sort-icon { opacity: 1; color: var(--accent); }
+    td {
+      padding: 10px 16px;
+      border-top: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    tr:hover td { background: var(--surface); }
+    .rank-cell { font-weight: 700; color: var(--accent); }
+    .highlight { color: var(--s-tier); font-weight: 700; }
+
+    /* Radar Chart Section */
+    .chart-section {
+      margin: 48px 0;
+      text-align: center;
+    }
+    .chart-section h2 { font-size: 1.3rem; margin-bottom: 8px; text-align: left; }
+    .chart-section p { color: var(--text2); font-size: 0.85rem; margin-bottom: 20px; text-align: left; }
+    .chart-controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .chart-toggle {
+      padding: 6px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text2);
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+    .chart-toggle.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(108, 114, 203, 0.15);
+    }
+    canvas {
+      max-width: 600px;
+      margin: 0 auto;
+      display: block;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      margin-top: 48px;
+      color: var(--text2);
+      font-size: 0.8rem;
+      text-align: center;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 640px) {
+      .models-grid { grid-template-columns: 1fr; }
+      .bench-label { width: 80px; font-size: 0.7rem; }
+      header h1 { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div>
+      <h1>Open-Source AI Model Benchmark</h1>
+      <p>最新オープンソースAIモデル性能比較 — 2026年3月更新</p>
+    </div>
+    <div style="font-size:0.8rem; color:var(--text2)">データソース: Chatbot Arena, AIME, GPQA, SWE-bench</div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- Filters -->
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">すべて</button>
+    <button class="filter-btn" data-filter="s">S Tier</button>
+    <button class="filter-btn" data-filter="a">A Tier</button>
+    <button class="filter-btn" data-filter="b">B Tier</button>
+    <button class="filter-btn" data-filter="moe">MoE</button>
+    <button class="filter-btn" data-filter="dense">Dense</button>
+  </div>
+
+  <!-- Tier S -->
+  <div class="tier-section" data-tier="s">
+    <div class="tier-label"><span class="tier-badge tier-s">S</span> 最高性能モデル</div>
+    <div class="models-grid" id="tier-s"></div>
+  </div>
+
+  <!-- Tier A -->
+  <div class="tier-section" data-tier="a">
+    <div class="tier-label"><span class="tier-badge tier-a">A</span> 高性能モデル</div>
+    <div class="models-grid" id="tier-a"></div>
+  </div>
+
+  <!-- Tier B -->
+  <div class="tier-section" data-tier="b">
+    <div class="tier-label"><span class="tier-badge tier-b">B</span> 優秀モデル（コスパ重視）</div>
+    <div class="models-grid" id="tier-b"></div>
+  </div>
+
+  <!-- Comparison Table -->
+  <div class="table-section">
+    <h2>ベンチマーク比較表</h2>
+    <div class="table-wrap">
+      <table id="compare-table">
+        <thead>
+          <tr>
+            <th data-col="rank"># <span class="sort-icon">▼</span></th>
+            <th data-col="name">モデル <span class="sort-icon">▼</span></th>
+            <th data-col="org">組織 <span class="sort-icon">▼</span></th>
+            <th data-col="params">パラメータ <span class="sort-icon">▼</span></th>
+            <th data-col="arch">アーキテクチャ <span class="sort-icon">▼</span></th>
+            <th data-col="arena">Arena Rating <span class="sort-icon">▼</span></th>
+            <th data-col="aime">AIME 2025 <span class="sort-icon">▼</span></th>
+            <th data-col="gpqa">GPQA Diamond <span class="sort-icon">▼</span></th>
+            <th data-col="swe">SWE-bench <span class="sort-icon">▼</span></th>
+            <th data-col="context">Context <span class="sort-icon">▼</span></th>
+            <th data-col="license">ライセンス <span class="sort-icon">▼</span></th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Radar Chart -->
+  <div class="chart-section">
+    <h2>レーダーチャート比較</h2>
+    <p>モデルを選択して性能プロファイルを比較（最大4つ）</p>
+    <div class="chart-controls" id="chart-controls"></div>
+    <canvas id="radar" width="600" height="600"></canvas>
+  </div>
+
+</main>
+
+<footer>
+  <div class="container">
+    <p>データは公開ベンチマーク結果に基づいています。最終更新: 2026年3月</p>
+    <p style="margin-top:6px">
+      参照:
+      <a href="https://onyx.app/open-llm-leaderboard" target="_blank">Onyx AI Leaderboard</a> ·
+      <a href="https://awesomeagents.ai/leaderboards/open-source-llm-leaderboard/" target="_blank">Awesome Agents</a> ·
+      <a href="https://llm-stats.com/llm-updates" target="_blank">LLM Stats</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+const models = [
+  {
+    name: "Qwen 3.5", org: "Alibaba", params: "397B", paramsNum: 397, arch: "MoE",
+    tier: "s", license: "Apache 2.0", licenseClass: "license-apache", context: "128K",
+    arena: 1448, aime: 94.1, gpqa: 88.4, swe: 76.4
+  },
+  {
+    name: "DeepSeek V3.2", org: "DeepSeek", params: "685B (37B active)", paramsNum: 685, arch: "MoE",
+    tier: "s", license: "MIT", licenseClass: "license-mit", context: "128K",
+    arena: 1421, aime: 89.3, gpqa: 79.9, swe: 77.8
+  },
+  {
+    name: "DeepSeek R1", org: "DeepSeek", params: "671B", paramsNum: 671, arch: "MoE",
+    tier: "s", license: "MIT", licenseClass: "license-mit", context: "128K",
+    arena: 1430, aime: 87.5, gpqa: 71.5, swe: 49.2
+  },
+  {
+    name: "GLM-4.7", org: "Zhipu AI", params: "355B", paramsNum: 355, arch: "MoE",
+    tier: "s", license: "Apache 2.0", licenseClass: "license-apache", context: "128K",
+    arena: 1415, aime: 85.0, gpqa: 75.2, swe: 72.1
+  },
+  {
+    name: "Mistral Large 3", org: "Mistral AI", params: "675B", paramsNum: 675, arch: "MoE",
+    tier: "s", license: "Apache 2.0", licenseClass: "license-apache", context: "128K",
+    arena: 1410, aime: 82.7, gpqa: 74.8, swe: 58.3
+  },
+  {
+    name: "Llama 4 Maverick", org: "Meta", params: "402B", paramsNum: 402, arch: "MoE",
+    tier: "a", license: "Llama 4", licenseClass: "license-llama", context: "1M",
+    arena: 1400, aime: 78.6, gpqa: 72.1, swe: 55.0
+  },
+  {
+    name: "Nemotron Ultra", org: "NVIDIA", params: "253B", paramsNum: 253, arch: "Dense",
+    tier: "a", license: "Apache 2.0", licenseClass: "license-apache", context: "128K",
+    arena: 1390, aime: 80.2, gpqa: 70.5, swe: 52.8
+  },
+  {
+    name: "Qwen 3 235B", org: "Alibaba", params: "235B", paramsNum: 235, arch: "Dense",
+    tier: "a", license: "Apache 2.0", licenseClass: "license-apache", context: "128K",
+    arena: 1422, aime: 92.3, gpqa: 82.6, swe: 55.7
+  },
+  {
+    name: "Step-3.5-Flash", org: "StepFun", params: "196B", paramsNum: 196, arch: "MoE",
+    tier: "a", license: "Apache 2.0", licenseClass: "license-apache", context: "256K",
+    arena: 1385, aime: 97.3, gpqa: 73.0, swe: 50.1
+  },
+  {
+    name: "Llama 3.3 70B", org: "Meta", params: "70B", paramsNum: 70, arch: "Dense",
+    tier: "b", license: "Llama 3", licenseClass: "license-llama", context: "128K",
+    arena: 1320, aime: 52.4, gpqa: 54.3, swe: 35.8
+  },
+  {
+    name: "Qwen 2.5-72B", org: "Alibaba", params: "72B", paramsNum: 72, arch: "Dense",
+    tier: "b", license: "Apache 2.0", licenseClass: "license-apache", context: "128K",
+    arena: 1310, aime: 48.6, gpqa: 52.1, swe: 33.5
+  },
+  {
+    name: "Gemma 3 27B", org: "Google", params: "27B", paramsNum: 27, arch: "Dense",
+    tier: "b", license: "Gemma", licenseClass: "license-llama", context: "128K",
+    arena: 1295, aime: 40.2, gpqa: 48.7, swe: 28.3
+  }
+];
+
+// Max values for bar scaling
+const maxVals = { arena: 1500, aime: 100, gpqa: 100, swe: 100 };
+
+function createCard(m) {
+  return `
+    <div class="model-card" data-tier="${m.tier}" data-arch="${m.arch.toLowerCase()}">
+      <div class="model-header">
+        <div>
+          <div class="model-name">${m.name}</div>
+          <div class="model-org">${m.org}</div>
+        </div>
+        <span class="model-params">${m.params}</span>
+      </div>
+      <div class="model-meta">
+        <span class="meta-tag ${m.licenseClass}">${m.license}</span>
+        <span class="meta-tag">${m.arch}</span>
+        <span class="meta-tag">Context: ${m.context}</span>
+      </div>
+      <div class="benchmarks">
+        ${benchBar("Arena", m.arena, maxVals.arena)}
+        ${benchBar("AIME 2025", m.aime, maxVals.aime)}
+        ${benchBar("GPQA", m.gpqa, maxVals.gpqa)}
+        ${benchBar("SWE-bench", m.swe, maxVals.swe)}
+      </div>
+    </div>`;
+}
+
+function benchBar(label, val, max) {
+  const pct = Math.min((val / max) * 100, 100);
+  return `
+    <div class="bench-row">
+      <span class="bench-label">${label}</span>
+      <div class="bench-bar-bg"><div class="bench-bar" style="width:${pct}%"></div></div>
+      <span class="bench-value">${val}</span>
+    </div>`;
+}
+
+// Render tier cards
+["s", "a", "b"].forEach(tier => {
+  const grid = document.getElementById("tier-" + tier);
+  grid.innerHTML = models.filter(m => m.tier === tier).map(createCard).join("");
+});
+
+// Render table
+function renderTable(sortCol = "arena", asc = false) {
+  const sorted = [...models].sort((a, b) => {
+    let va = a[sortCol], vb = b[sortCol];
+    if (typeof va === "string") { va = va.toLowerCase(); vb = vb.toLowerCase(); }
+    return asc ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
+  });
+  const tbody = document.getElementById("table-body");
+  tbody.innerHTML = sorted.map((m, i) => {
+    const best = { aime: Math.max(...models.map(x=>x.aime)), gpqa: Math.max(...models.map(x=>x.gpqa)), swe: Math.max(...models.map(x=>x.swe)), arena: Math.max(...models.map(x=>x.arena)) };
+    return `<tr>
+      <td class="rank-cell">${i + 1}</td>
+      <td><strong>${m.name}</strong></td>
+      <td>${m.org}</td>
+      <td>${m.params}</td>
+      <td>${m.arch}</td>
+      <td class="${m.arena === best.arena ? 'highlight' : ''}">${m.arena}</td>
+      <td class="${m.aime === best.aime ? 'highlight' : ''}">${m.aime}</td>
+      <td class="${m.gpqa === best.gpqa ? 'highlight' : ''}">${m.gpqa}</td>
+      <td class="${m.swe === best.swe ? 'highlight' : ''}">${m.swe}</td>
+      <td>${m.context}</td>
+      <td><span class="meta-tag ${m.licenseClass}">${m.license}</span></td>
+    </tr>`;
+  }).join("");
+}
+renderTable();
+
+// Table sorting
+let currentSort = { col: "arena", asc: false };
+document.querySelectorAll("#compare-table th").forEach(th => {
+  th.addEventListener("click", () => {
+    const col = th.dataset.col;
+    const asc = currentSort.col === col ? !currentSort.asc : false;
+    currentSort = { col, asc };
+    document.querySelectorAll("#compare-table th").forEach(t => t.classList.remove("sorted"));
+    th.classList.add("sorted");
+    renderTable(col, asc);
+  });
+});
+
+// Filters
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    const f = btn.dataset.filter;
+    document.querySelectorAll(".tier-section").forEach(s => {
+      if (f === "all") { s.style.display = ""; return; }
+      if (["s","a","b"].includes(f)) {
+        s.style.display = s.dataset.tier === f ? "" : "none";
+      } else {
+        s.style.display = "";
+      }
+    });
+    document.querySelectorAll(".model-card").forEach(c => {
+      if (f === "all" || ["s","a","b"].includes(f)) { c.style.display = ""; return; }
+      c.style.display = c.dataset.arch === f ? "" : "none";
+    });
+  });
+});
+
+// Radar Chart
+const radarColors = ["#6c72cb", "#cb69c1", "#4ade80", "#f59e0b"];
+const radarLabels = ["Arena Rating", "AIME 2025", "GPQA Diamond", "SWE-bench", "Context Size"];
+const selected = new Set([models[0].name, models[1].name]);
+
+function contextToScore(ctx) {
+  const map = { "128K": 50, "256K": 75, "1M": 100 };
+  return map[ctx] || 50;
+}
+
+function getRadarData(m) {
+  return [
+    (m.arena / 1500) * 100,
+    m.aime,
+    m.gpqa,
+    m.swe,
+    contextToScore(m.context)
+  ];
+}
+
+function drawRadar() {
+  const canvas = document.getElementById("radar");
+  const ctx = canvas.getContext("2d");
+  const W = canvas.width, H = canvas.height;
+  const cx = W / 2, cy = H / 2, R = Math.min(W, H) / 2 - 60;
+  const n = radarLabels.length;
+  ctx.clearRect(0, 0, W, H);
+
+  // Draw grid
+  for (let ring = 1; ring <= 5; ring++) {
+    const r = (R / 5) * ring;
+    ctx.beginPath();
+    for (let i = 0; i <= n; i++) {
+      const angle = (Math.PI * 2 / n) * i - Math.PI / 2;
+      const x = cx + r * Math.cos(angle);
+      const y = cy + r * Math.sin(angle);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = "rgba(255,255,255,0.08)";
+    ctx.stroke();
+  }
+
+  // Draw axes & labels
+  for (let i = 0; i < n; i++) {
+    const angle = (Math.PI * 2 / n) * i - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + R * Math.cos(angle), cy + R * Math.sin(angle));
+    ctx.strokeStyle = "rgba(255,255,255,0.1)";
+    ctx.stroke();
+    const lx = cx + (R + 30) * Math.cos(angle);
+    const ly = cy + (R + 30) * Math.sin(angle);
+    ctx.fillStyle = "#8b8fa8";
+    ctx.font = "12px sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(radarLabels[i], lx, ly);
+  }
+
+  // Draw data
+  let colorIdx = 0;
+  models.filter(m => selected.has(m.name)).forEach(m => {
+    const data = getRadarData(m);
+    const color = radarColors[colorIdx % radarColors.length];
+    ctx.beginPath();
+    data.forEach((val, i) => {
+      const angle = (Math.PI * 2 / n) * i - Math.PI / 2;
+      const r = (val / 100) * R;
+      const x = cx + r * Math.cos(angle);
+      const y = cy + r * Math.sin(angle);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.closePath();
+    ctx.fillStyle = color + "22";
+    ctx.fill();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Points
+    data.forEach((val, i) => {
+      const angle = (Math.PI * 2 / n) * i - Math.PI / 2;
+      const r = (val / 100) * R;
+      ctx.beginPath();
+      ctx.arc(cx + r * Math.cos(angle), cy + r * Math.sin(angle), 4, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+    });
+    colorIdx++;
+  });
+
+  // Legend
+  let ly = H - 20;
+  let lx = 20;
+  colorIdx = 0;
+  models.filter(m => selected.has(m.name)).forEach(m => {
+    const color = radarColors[colorIdx % radarColors.length];
+    ctx.fillStyle = color;
+    ctx.fillRect(lx, ly - 8, 12, 12);
+    ctx.fillStyle = "#e2e4f0";
+    ctx.font = "12px sans-serif";
+    ctx.textAlign = "left";
+    ctx.fillText(m.name, lx + 18, ly);
+    lx += ctx.measureText(m.name).width + 40;
+    colorIdx++;
+  });
+}
+
+// Chart controls
+const controls = document.getElementById("chart-controls");
+models.forEach(m => {
+  const btn = document.createElement("button");
+  btn.className = "chart-toggle" + (selected.has(m.name) ? " active" : "");
+  btn.textContent = m.name;
+  btn.addEventListener("click", () => {
+    if (selected.has(m.name)) {
+      if (selected.size > 1) { selected.delete(m.name); btn.classList.remove("active"); }
+    } else {
+      if (selected.size < 4) { selected.add(m.name); btn.classList.add("active"); }
+    }
+    drawRadar();
+  });
+  controls.appendChild(btn);
+});
+
+drawRadar();
+</script>
+
+</body>
+</html>

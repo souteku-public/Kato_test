@@ -129,7 +129,7 @@
   <div class="container">
     <div>
       <h1>Open-Source AI Model Benchmark</h1>
-      <p>AIモデル総合性能比較 — 13ジャンル・235+モデル — 2026年3月更新</p>
+      <p>AIモデル総合性能比較 — 13ジャンル・240+モデル — 2026年3月更新</p>
     </div>
   </div>
 </header>
@@ -215,7 +215,9 @@ const categories = {
       { name: "Phi-4-mini 3.8B", org: "Microsoft", year: 2025, params: "3.8B", arch: "Dense", license: "MIT", arena: 1150, aime: 40.0, gpqa: 38.0, swe: 12.0 },
       { name: "Gemma 2 27B", org: "Google", year: 2024, params: "27B", arch: "Dense", license: "Apache 2.0", arena: 1250, aime: 30.0, gpqa: 42.0, swe: 18.0 },
       { name: "Mistral Large 2", org: "Mistral AI", year: 2024, params: "123B", arch: "Dense", license: "Mistral Research", arena: 1330, aime: 45.0, gpqa: 58.0, swe: 35.0 },
-      { name: "Grok-3 Mini", org: "xAI", year: 2025, params: "N/A", arch: "CoT Reasoning", license: "Proprietary", arena: 1370, aime: 95.8, gpqa: 80.4, swe: 42.0 }
+      { name: "Grok-3 Mini", org: "xAI", year: 2025, params: "N/A", arch: "CoT Reasoning", license: "Proprietary", arena: 1370, aime: 95.8, gpqa: 80.4, swe: 42.0 },
+      { name: "OpenAI o1-mini", org: "OpenAI", year: 2024, params: "N/A", arch: "CoT Reasoning", license: "Proprietary", arena: 1350, aime: 70.0, gpqa: 68.0, swe: 40.0 },
+      { name: "Llama 4 Scout", org: "Meta", year: 2025, params: "109B (17B active)", arch: "MoE", license: "Llama 4", arena: 1350, aime: 55.0, gpqa: 60.0, swe: 35.0 }
     ]
   },
 
@@ -330,7 +332,8 @@ const categories = {
       { name: "Kandinsky 2.1", org: "Sber AI", year: 2023, params: "3.3B", arch: "CLIP Prior+Diffusion", license: "Apache 2.0", fid: 8.0, humanpref: 62, params_m: 3300 },
       { name: "Ideogram 3.0", org: "Ideogram AI", year: 2025, params: "N/A", arch: "Diffusion Trans", license: "Proprietary", fid: 3.5, humanpref: 93, params_m: 0 },
       { name: "SD 3.5 Medium", org: "Stability AI", year: 2024, params: "2.5B", arch: "MMDiT+Flow", license: "StabilityAI CL", fid: 6.2, humanpref: 76, params_m: 2500 },
-      { name: "SD 3.5 Large Turbo", org: "Stability AI", year: 2024, params: "8B", arch: "MMDiT+Flow 4step", license: "StabilityAI CL", fid: 5.5, humanpref: 81, params_m: 8000 }
+      { name: "SD 3.5 Large Turbo", org: "Stability AI", year: 2024, params: "8B", arch: "MMDiT+Flow 4step", license: "StabilityAI CL", fid: 5.5, humanpref: 81, params_m: 8000 },
+      { name: "GPT-4o Image Gen", org: "OpenAI", year: 2025, params: "N/A", arch: "Native Omnimodel", license: "Proprietary", fid: 3.2, humanpref: 95, params_m: 0 }
     ]
   },
 
@@ -358,7 +361,8 @@ const categories = {
       { name: "Kokoro", org: "Kokoro Project", year: 2024, params: "82M", arch: "StyleTTS-based", license: "Apache 2.0", mos: 4.1, rtf: 0.05, params_m: 82 },
       { name: "Orpheus TTS 3B", org: "Canopy Labs", year: 2025, params: "3B", arch: "LLM-based TTS", license: "Apache 2.0", mos: 4.4, rtf: 0.18, params_m: 3000 },
       { name: "Chatterbox", org: "Resemble AI", year: 2025, params: "N/A", arch: "LLM+Diffusion", license: "MIT", mos: 4.3, rtf: 0.15, params_m: 500 },
-      { name: "MaskGCT", org: "Amphion/OpenMMLab", year: 2024, params: "N/A", arch: "Non-AR Masked", license: "CC-BY-NC-4.0", mos: 4.2, rtf: 0.10, params_m: 400 }
+      { name: "MaskGCT", org: "Amphion/OpenMMLab", year: 2024, params: "N/A", arch: "Non-AR Masked", license: "CC-BY-NC-4.0", mos: 4.2, rtf: 0.10, params_m: 400 },
+      { name: "GPT-4o-mini-TTS", org: "OpenAI", year: 2025, params: "N/A", arch: "LLM Instructable TTS", license: "Proprietary", mos: 4.5, rtf: 0.12, params_m: 0 }
     ]
   },
 
@@ -515,7 +519,10 @@ const categories = {
       { name: "WizardCoder 33B", org: "Microsoft/WizardLM", year: 2023, params: "33B", arch: "Evol-Instruct", license: "Llama 2", humaneval: 79.9, swe: 18.0, params_m: 33000 },
       { name: "DeepSeek Coder 33B", org: "DeepSeek", year: 2023, params: "33B", arch: "Dense Transformer", license: "MIT", humaneval: 79.3, swe: 20.0, params_m: 33000 },
       { name: "Yi-Coder 9B", org: "01.AI", year: 2024, params: "9B", arch: "Dense Transformer", license: "Apache 2.0", humaneval: 53.7, swe: 14.0, params_m: 9000 },
-      { name: "Granite Code 34B", org: "IBM", year: 2024, params: "34B", arch: "Dense Transformer", license: "Apache 2.0", humaneval: 51.8, swe: 12.0, params_m: 34000 }
+      { name: "Granite Code 34B", org: "IBM", year: 2024, params: "34B", arch: "Dense Transformer", license: "Apache 2.0", humaneval: 51.8, swe: 12.0, params_m: 34000 },
+      { name: "Devstral 2", org: "Mistral AI", year: 2025, params: "N/A", arch: "MoE Agent", license: "Apache 2.0", humaneval: 85.0, swe: 72.2, params_m: 0 },
+      { name: "Devin", org: "Cognition", year: 2024, params: "N/A", arch: "Autonomous Agent", license: "Proprietary", humaneval: 0, swe: 13.9, params_m: 0 },
+      { name: "OpenHands CodeAct", org: "AllHands AI", year: 2024, params: "N/A", arch: "LLM Agent", license: "MIT", humaneval: 0, swe: 53.0, params_m: 0 }
     ]
   },
 
